@@ -4,9 +4,10 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass, replace
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Iterable, Union, cast
 
 from biip import ParseConfig, ParseError
+from biip.gs1_application_identifiers import _CUSTOM_GS1_APPLICATION_IDENTIFIERS, GS1ApplicationIdentifier
 from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_messages import GS1Message
 from biip.gtin import Gtin, GtinFormat
@@ -19,6 +20,48 @@ if TYPE_CHECKING:
 
     from biip.gs1_element_strings import GS1ElementStrings
 
+def _parse_dict_as_gs1_application_identifier(
+    identifiers: dict[str, Union[GS1ApplicationIdentifier, dict[str, Any]]]
+):
+    for ai, identifier in identifiers.items():
+        if not isinstance(identifier, GS1ApplicationIdentifier):
+            identifiers[ai] = GS1ApplicationIdentifier(**identifier)
+
+def set_custom_gs1_application_identifiers(
+    identifiers: dict[str, Union[GS1ApplicationIdentifier, dict[str, Any]]]
+):
+    """Set custom GS1 Application Identifiers.
+
+    This function updates the internal dictionary of GS1 Application Identifiers.
+
+    Args:
+        identifiers: A dictionary of custom GS1 Application Identifiers.
+    """
+    _parse_dict_as_gs1_application_identifier(identifiers)
+    _CUSTOM_GS1_APPLICATION_IDENTIFIERS.update(cast(Iterable[tuple[str, GS1ApplicationIdentifier]], identifiers))
+
+def add_custom_gs1_application_identifier(
+    identifiers: dict[str, Union[GS1ApplicationIdentifier, dict[str, Any]]]
+):
+    """Add custom GS1 Application Identifiers.
+
+    This function adds custom GS1 Application Identifiers to the existing set.
+
+    Args:
+        identifiers: A dictionary of custom GS1 Application Identifiers.
+    """
+    set_custom_gs1_application_identifiers(identifiers)
+    _CUSTOM_GS1_APPLICATION_IDENTIFIERS.update(cast(Iterable[tuple[str, GS1ApplicationIdentifier]], identifiers))
+
+def remove_custom_gs1_application_identifiers(ais: list[str]):
+    """Remove a custom GS1 Application Identifier.
+
+    Args:
+        ai: The Application Identifier to remove.
+    """
+    for ai, identifier in _CUSTOM_GS1_APPLICATION_IDENTIFIERS.items():
+        if ai in _CUSTOM_GS1_APPLICATION_IDENTIFIERS:
+            del _CUSTOM_GS1_APPLICATION_IDENTIFIERS[ai]
 
 def parse(
     value: str,
