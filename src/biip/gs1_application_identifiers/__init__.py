@@ -91,6 +91,7 @@ class GS1ApplicationIdentifier:
                 format='N2+N14'
             )
         """
+        _GS1_APPLICATION_IDENTIFIERS.update(_CUSTOM_GS1_APPLICATION_IDENTIFIERS)
         for application_identifier in _GS1_APPLICATION_IDENTIFIERS.values():
             if value.startswith(application_identifier.ai):
                 return application_identifier
@@ -106,6 +107,7 @@ class GS1ApplicationIdentifier:
         """Get the string representation of the Application Identifier."""
         return f"({self.ai})"
 
+_CUSTOM_GS1_APPLICATION_IDENTIFIERS: dict[str, GS1ApplicationIdentifier] = {}
 
 _GS1_APPLICATION_IDENTIFIERS_FILE = (
     resources.files("biip")
