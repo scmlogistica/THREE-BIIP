@@ -92,7 +92,7 @@ from importlib.metadata import (  # pyright: ignore[reportMissingImports]
 
 from biip._config import ParseConfig
 from biip._exceptions import BiipException, EncodeError, ParseError
-from biip._parser import ParseResult, parse, set_custom_gs1_application_identifiers, add_custom_gs1_application_identifier, remove_custom_gs1_application_identifiers
+from biip._parser import ParseResult, parse, set_custom_gs1_application_identifiers, add_custom_gs1_application_identifier, remove_custom_gs1_application_identifiers, remove_gs1_application_identifiers
 
 __all__ = [
     "BiipException",
@@ -103,7 +103,8 @@ __all__ = [
     "parse",
     "set_custom_gs1_application_identifiers",
     "add_custom_gs1_application_identifier",
-    "remove_custom_gs1_application_identifiers"
+    "remove_custom_gs1_application_identifiers",
+    "remove_gs1_application_identifiers"
 ]
 
 
