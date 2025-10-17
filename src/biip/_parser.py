@@ -7,7 +7,7 @@ from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any, Iterable, Union, cast
 
 from biip import ParseConfig, ParseError
-from biip.gs1_application_identifiers import _CUSTOM_GS1_APPLICATION_IDENTIFIERS, GS1ApplicationIdentifier
+from biip.gs1_application_identifiers import _CUSTOM_GS1_APPLICATION_IDENTIFIERS, _GS1_APPLICATION_IDENTIFIERS, GS1ApplicationIdentifier
 from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_messages import GS1Message
 from biip.gtin import Gtin, GtinFormat
@@ -59,9 +59,19 @@ def remove_custom_gs1_application_identifiers(ais: list[str]):
     Args:
         ai: The Application Identifier to remove.
     """
-    for ai, identifier in _CUSTOM_GS1_APPLICATION_IDENTIFIERS.items():
+    for ai in ais:
         if ai in _CUSTOM_GS1_APPLICATION_IDENTIFIERS:
             del _CUSTOM_GS1_APPLICATION_IDENTIFIERS[ai]
+
+def remove_gs1_application_identifiers(ais: list[str]):
+    """Remove a GS1 Application Identifier.
+
+    Args:
+        ai: The Application Identifier to remove.
+    """
+    for ai in ais:
+        if ai in _GS1_APPLICATION_IDENTIFIERS:
+            del _GS1_APPLICATION_IDENTIFIERS[ai]
 
 def parse(
     value: str,
