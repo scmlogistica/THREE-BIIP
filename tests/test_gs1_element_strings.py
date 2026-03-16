@@ -42,6 +42,7 @@ from biip.sscc import Sscc
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="703", usage="GS1 Norway"),
                     company_prefix=GS1CompanyPrefix(value="703206"),
+                    item_reference="980498",
                     payload="703206980498",
                     check_digit=8,
                 ),
@@ -58,6 +59,7 @@ from biip.sscc import Sscc
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="703", usage="GS1 Norway"),
                     company_prefix=GS1CompanyPrefix(value="703206"),
+                    item_reference="980498",
                     payload="703206980498",
                     check_digit=8,
                 ),
@@ -74,6 +76,7 @@ from biip.sscc import Sscc
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="703", usage="GS1 Norway"),
                     company_prefix=GS1CompanyPrefix(value="703206"),
+                    item_reference="980498",
                     payload="703206980498",
                     check_digit=8,
                 ),
@@ -329,7 +332,7 @@ def test_extract_handles_zero_day_as_last_day_of_month(
         ("3123123456", Decimal("123.456")),  # Second dimension (m)
         ("3132123456", Decimal("1234.56")),  # Third dimension (m)
         ("3141123456", Decimal("12345.6")),  # Area (m^2)
-        ("3150123456", Decimal("123456")),  # Net volume (l)
+        ("3150123456", Decimal(123456)),  # Net volume (l)
         ("3161123456", Decimal("12345.6")),  # Net volume (m^3)
         # ... plus equivalent for imperial units
         ("3661123456", Decimal("12345.6")),  # Net volume (cubic yards)
@@ -378,12 +381,12 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
         # Amount payable and ISO currency code (section 3.6.7)
         ("39127101230", "ZAR", Decimal("12.30")),
         ("39117101230", "ZAR", Decimal("123.0")),
-        ("391097812301", "EUR", Decimal("12301")),
+        ("391097812301", "EUR", Decimal(12301)),
         #
         # Amount payable for variable measure trade item and currency (section 3.6.9)
         ("39327101230", "ZAR", Decimal("12.30")),
         ("39317101230", "ZAR", Decimal("123.0")),
-        ("393097812301", "EUR", Decimal("12301")),
+        ("393097812301", "EUR", Decimal(12301)),
     ],
 )
 def test_extract_amount_payable_and_currency(
@@ -405,7 +408,7 @@ def test_extract_amount_payable_and_currency(
 @pytest.mark.parametrize(
     ("value", "expected"),
     [
-        ("39400010", Decimal("10")),
+        ("39400010", Decimal(10)),
         ("39410055", Decimal("5.5")),
     ],
 )

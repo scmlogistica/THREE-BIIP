@@ -11,7 +11,7 @@ jobs:
     name: Build
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: hynek/build-and-inspect-python-package@v2
 
   tests:
@@ -31,32 +31,35 @@ jobs:
           - name: "pytest (3.13)"
             python: "3.13"
             tox: "3.13"
-            coverage: true
           - name: "pytest (3.14)"
             python: "3.14"
             tox: "3.14"
+            coverage: true
           - name: "mypy"
-            python: "3.13"
+            python: "3.14"
             tox: mypy
           - name: "pyright"
-            python: "3.13"
+            python: "3.14"
             tox: pyright
+          - name: "ty"
+            python: "3.14"
+            tox: ty
           - name: "ruff format"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-format
           - name: "ruff check"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-check
           - name: "Docs"
-            python: "3.13"
+            python: "3.14"
             tox: docs
 
     name: ${{ matrix.name }}
     runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python }}
           activate-environment: true

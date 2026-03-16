@@ -83,6 +83,7 @@ batch number.
                 company_prefix=GS1CompanyPrefix(
                     value='0614141'
                 ),
+                item_reference='12345',
                 payload='61414112345',
                 check_digit=2
             )
@@ -302,7 +303,7 @@ class GS1DigitalLinkURI:
 
     def as_gs1_message(self) -> GS1Message:
         """Converts the GS1 Digital Link URI to a GS1 Message."""
-        from biip.gs1_messages import GS1Message
+        from biip.gs1_messages import GS1Message  # noqa: PLC0415
 
         return GS1Message.from_element_strings(self.element_strings)
 
