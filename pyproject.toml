@@ -1,5 +1,5 @@
 [project]
-name = "biip"
+name = "three-biip"
 version = "5.0.0"
 description = "Biip interprets the data in barcodes."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
@@ -79,7 +79,7 @@ source = ["src/", "*/site-packages/"]
 
 [tool.coverage.run]
 branch = true
-source_pkgs = ["biip"]
+source_pkgs = ["three-biip"]
 
 [tool.coverage.report]
 exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "def __rich_repr__"]
@@ -102,7 +102,7 @@ warn_unused_configs = true
 strict_equality = true
 
 [[tool.mypy.overrides]]
-module = "biip.*"
+module = "three-biip.*"
 disallow_untyped_defs = true
 
 
